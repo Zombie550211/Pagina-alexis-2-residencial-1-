@@ -1,0 +1,10 @@
+# Configuracion del editor
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Imagenes sueltas sin optimizar (usar .webp en images/)
+*.psd
