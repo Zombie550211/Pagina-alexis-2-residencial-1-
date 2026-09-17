@@ -1,0 +1,18 @@
+# Cabeceras de seguridad para Amplify Hosting.
+# Son las mismas que enviaba CloudFront antes de migrar (politica administrada
+# SecurityHeadersPolicy). Amplify no agrega ninguna por su cuenta.
+# Sin Content-Security-Policy a proposito: el sitio carga etiquetas de Google y
+# una CSP mal ajustada las bloquea sin mostrar ningun error.
+customHeaders:
+  - pattern: '**'
+    headers:
+      - key: 'Strict-Transport-Security'
+        value: 'max-age=31536000'
+      - key: 'X-Frame-Options'
+        value: 'SAMEORIGIN'
+      - key: 'X-Content-Type-Options'
+        value: 'nosniff'
+      - key: 'Referrer-Policy'
+        value: 'strict-origin-when-cross-origin'
+      - key: 'X-XSS-Protection'
+        value: '1; mode=block'
