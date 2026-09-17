@@ -86,4 +86,32 @@
     });
   });
 
+  /* ---------------------------------------------------------------
+     7. Clics de contacto → dataLayer (GTM)
+     Un solo listener delegado cubre todos los enlaces tel: de la
+     página, incluidos los que se añadan después. Un tel: no descarga
+     la página, así que el push siempre llega a tiempo: no hace falta
+     retrasar la navegación con eventCallback.
+     --------------------------------------------------------------- */
+  window.dataLayer = window.dataLayer || [];
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (!link) return;
+
+    var datos = {
+      event: 'contacto_click',
+      contacto_metodo: 'llamada',
+      contacto_numero: link.getAttribute('href').slice(4),
+      contacto_ubicacion: link.getAttribute('data-gtm-ubicacion') || 'sin-marcar',
+      contacto_texto: (link.textContent || '').replace(/\s+/g, ' ').trim()
+    };
+
+    // Solo los botones de los planes llevan plan asociado
+    var plan = link.getAttribute('data-gtm-plan');
+    if (plan) datos.contacto_plan = plan;
+
+    window.dataLayer.push(datos);
+  });
+
 })();
