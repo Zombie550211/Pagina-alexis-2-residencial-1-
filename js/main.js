@@ -112,6 +112,11 @@
     if (plan) datos.contacto_plan = plan;
 
     window.dataLayer.push(datos);
+
+    // Conversión de Google Ads "Contacto". Sin url: el tel: sigue su curso normal
+    if (typeof window.gtag_report_conversion === 'function') {
+      window.gtag_report_conversion();
+    }
   });
 
 })();
